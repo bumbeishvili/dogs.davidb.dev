@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Quick Start - Leaflet</title>
+    <title>Dogs</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +38,16 @@
         console.log('trying to load')
 
 
+        var greenIcon = L.icon({
+            iconUrl: 'https://i.imgur.com/N4EZJ7I.png',
+            shadowUrl: '',
+
+            iconSize: [68, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
 
         function init() {
 
@@ -47,9 +57,9 @@
 
                     data.forEach(d => {
                         const marker = L.marker([d.longitude,
-                            d.latitude]).addTo(mymap);
+                        d.latitude], { icon: greenIcon }).addTo(mymap);
 
-                        marker.bindPopup('<div style="width:150px"><b>'+d.title+'</b></br>'+'<img width=150 height=150 src="'+d.imgUrl+'"/>'+'<br/> '+d.description+'</div>');
+                        marker.bindPopup('<div style="width:150px"><b>' + d.title + '</b></br>' + (d.imgUrl ? ('<img width=150 height=150 src="' + d.imgUrl + '"/>') : ('')) + '<br/> ' + d.description + '</div>');
                         marker.on('mouseover', function (e) {
                             this.openPopup();
                         });
