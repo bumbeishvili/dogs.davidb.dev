@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Quick Start - Leaflet</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+
+
+</head>
+
+<body>
+
+    <div id="mapid" style="width: 100%; height: 100vh;"></div>
+    <script>
+
+        var mymap = L.map('mapid').setView([
+            41.73673515464632,
+            44.77237701416015,
+        ], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mymap);
+
+        console.log('trying to load')
+
+
+
+        function init() {
+
+            Tabletop.init({
+                key: 'https://docs.google.com/spreadsheets/d/1D_kNU_p9_m4c8BBwAKpDgY-aYH0dGD2Uxze-WiH5ucE/edit#gid=0',
+                callback: function (data, tabletop) {
+
+                    data.forEach(d => {
+                        const marker = L.marker([d.longitude,
+                            d.latitude]).addTo(mymap);
+
+                        marker.bindPopup('<div style="width:150px"><b>'+d.title+'</b></br>'+'<img width=150 height=150 src="'+d.imgUrl+'"/>'+'<br/> '+d.description+'</div>');
+                        marker.on('mouseover', function (e) {
+                            this.openPopup();
+                        });
+                        marker.on('mouseout', function (e) {
+                            this.closePopup();
+                        });
+
+                    })
+                },
+                simpleSheet: true
+            })
+        }
+        window.addEventListener('DOMContentLoaded', init)
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
