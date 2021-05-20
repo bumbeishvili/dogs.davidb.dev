@@ -35,6 +35,21 @@
             44.77237701416015,
         ], 11);
 
+
+        geoFindMe()
+        function geoFindMe() {
+
+            function success(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                mymap.setView([latitude, longitude], 11);
+            }
+
+            navigator.geolocation.getCurrentPosition(success);
+        }
+
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
