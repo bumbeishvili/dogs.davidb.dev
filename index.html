@@ -72,26 +72,23 @@
 
         function init() {
 
-            Tabletop.init({
-                key: 'https://docs.google.com/spreadsheets/d/1D_kNU_p9_m4c8BBwAKpDgY-aYH0dGD2Uxze-WiH5ucE/edit#gid=0',
-                callback: function (data, tabletop) {
 
-                    data.forEach(d => {
-                        const marker = L.marker([d.longitude,
-                        d.latitude], { icon: greenIcon }).addTo(mymap);
+            d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTNPlhniF91rudoBmY2ypx3rppzL2A_7I2dxD712-DxQ4yR2SJ9kk8CmTFjAYYqcvppTT_pGDhhqm-i/pub?output=csv").then(data => {
+                data.forEach(d => {
+                    const marker = L.marker([d.longitude,
+                    d.latitude], { icon: greenIcon }).addTo(mymap);
 
-                        marker.bindPopup('<div style="width:150px"><b>' + d.title + '</b></br>' + (d.imgUrl ? ('<img width=150 height=150 src="' + d.imgUrl + '"/>') : ('')) + '<br/> ' + d.description + '</div>');
-                        marker.on('mouseover', function (e) {
-                            this.openPopup();
-                        });
-                        marker.on('mouseout', function (e) {
-                            this.closePopup();
-                        });
+                    marker.bindPopup('<div style="width:150px"><b>' + d.title + '</b></br>' + (d.imgUrl ? ('<img width=150 height=150 src="' + d.imgUrl + '"/>') : ('')) + '<br/> ' + d.description + '</div>');
+                    marker.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+                    marker.on('mouseout', function (e) {
+                        this.closePopup();
+                    });
 
-                    })
-                },
-                simpleSheet: true
+                })
             })
+
         }
         window.addEventListener('DOMContentLoaded', init)
 
